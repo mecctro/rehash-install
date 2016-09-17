@@ -1,4 +1,4 @@
-dpkg-reconfigure tzdata // Set local time to UTC
+dpkg-reconfigure tzdata /* Set local time to UTC */
 apt-get install git perl-doc -y
 apt-get install build-essential libgd-dev \
  libmysqlclient-dev zlib1g zlib1g-dev libexpat1-dev libssl-dev -y

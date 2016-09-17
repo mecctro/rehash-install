@@ -12,5 +12,5 @@ cd rehash
 // change perl to 5.24.0
 make build-environment install
 mv /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29
-cpan force  ExtUtils::Embed
+cpan -i ExtUtils::Embed
 make install-dbix-password

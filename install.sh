@@ -12,7 +12,8 @@ cd rehash &&
 adduser rehash &&
 
 make build-environment &&
-mv /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 &&
+//cp -R /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 &&
+ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 make build-environment install &&

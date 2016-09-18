@@ -11,7 +11,7 @@ git clone https://github.com/SoylentNews/rehash &&
 cd rehash &&
 
 // Configure user
-adduser rehash &&
+adduser slash &&
 
 // Build rehash
 make build-environment &&

@@ -20,7 +20,7 @@ perlbrew switch perl-5.20.1
 
 make build-environment install
 mv /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29
-perl -MCPAN -e 'upgrade'
+// perl -MCPAN -e 'upgrade'
 perl -MCPAN -e "install ModPerl::MM"
 /opt/rehash-environment/apache-2.2.29/bin/apxs
 /opt/rehash-environment/apache-2.2.29

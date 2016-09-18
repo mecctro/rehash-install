@@ -14,6 +14,7 @@ cd rehash
 // change perl to 5.20.1
 
 \wget -O - https://install.perlbrew.pl | bash
+source ~/perl5/perlbrew/etc/bashrc
 perlbrew install perl-5.20.1
 perlbrew switch perl-5.20.1
 

@@ -11,7 +11,7 @@ apt-get install git \
 #
 # Get rehash
 git clone https://github.com/mecctro/rehash &&
-cd rehash &&
+#cd rehash &&
 #
 # Configure MySQL
 service mysql stop &&
@@ -31,6 +31,7 @@ sed -i 's/bind-address/#bind-address/g' /etc/mysql/my.cnf &&
 service mysql restart &&
 #
 # Build rehash
+cd rehash &&
 make build-environment USER=rehash GROUP=rehash -j 8 || true &&
 make build-environment USER=rehash GROUP=rehash -j 8 || true &&
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&

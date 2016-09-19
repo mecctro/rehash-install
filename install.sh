@@ -30,12 +30,15 @@ sed -i 's/bind-address/#bind-address/g' /etc/mysql/my.cnf &&
 ##service mysql restart &&
 #
 # Build rehash
-make build-environment USER=rehash GROUP=rehash -j 8 || true &&
-make build-environment USER=rehash GROUP=rehash -j 8 || true &&
+make build-environment USER=rehash GROUP=rehash -j 8 || true &
+wait
+make build-environment USER=rehash GROUP=rehash -j 8 || true &
+wait
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
-make build-environment install -j 8 || true &&
+make build-environment install -j 8 || true &
+wait
 #
 # Configure rehash
 make install-dbix-password &&

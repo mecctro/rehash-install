@@ -1,5 +1,6 @@
 #!/bin/sh
 set +e
+trap '' HUP
 # Set local time to UTC
 #
 # dpkg-reconfigure tzdata

@@ -20,7 +20,7 @@ nohup mysqld --skip-grant-tables 2>&1 || true &
 #
 # Add user locally and to DB
 #adduser rehash &&
-echo Enter MySQL root password for rehash user installation:
+echo Enter MySQL root password for rehash user installation: &&
 mysql -h 127.0.0.1 -e \
  "CREATE DATABASE rehash;
 CREATE USER 'rehash'@'%' IDENTIFIED BY 'rehash';
@@ -44,7 +44,7 @@ export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
 install-slashsite -u rehash &&
-
+#
 # Setup and start apache / rehash
 export PATH=/opt/rehash-environment/apache-2.2.29/bin:$PATH &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&

@@ -40,5 +40,4 @@ make build-environment install -j 8 || true &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
-
 install-slashsite -u rehash

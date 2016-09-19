@@ -12,7 +12,7 @@ cd rehash &&
 #
 # Configure MySQL
 service mysql stop &&
-mysqld --skip-grant-tables &
+nohup mysqld --skip-grant-tables > /dev/null 2>&1 &
 #
 # Add user locally and to DB
 adduser rehash &&

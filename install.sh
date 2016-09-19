@@ -14,7 +14,8 @@ git clone https://github.com/mecctro/rehash &&
 cd rehash &&
 #
 # Configure MySQL
-#service mysql stop &&
+service mysql stop &&
+wait $! && mysqld --skip-grant-tables || true &
 #mysqld --skip-grant-tables &
 #
 # Add user locally and to DB

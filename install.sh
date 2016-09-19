@@ -17,11 +17,11 @@ git clone https://github.com/mecctro/rehash &&
 # Configure MySQL
 service mysql stop &&
 #wait $! && mysqld --skip-grant-tables || true &
+echo Enter MySQL root password for rehash user installation: &&
 nohup mysqld --skip-grant-tables 2>&1 || true &
 #
 # Add user locally and to DB
 #adduser rehash &&
-echo Enter MySQL root password for rehash user installation: &&
 mysql -h 127.0.0.1 -e \
  "CREATE DATABASE rehash;
 CREATE USER 'rehash'@'%' IDENTIFIED BY 'rehash';

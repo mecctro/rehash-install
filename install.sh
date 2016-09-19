@@ -34,11 +34,10 @@ make build-environment USER=rehash GROUP=rehash -j 8 || true &&
 make build-environment USER=rehash GROUP=rehash -j 8 || true &&
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
-export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
+make install-dbix-password &&
 make build-environment install -j 8 || true &&
-export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
-make install-dbix-password &&
+
 install-slashsite -u rehash

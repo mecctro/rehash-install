@@ -15,8 +15,8 @@ cd rehash &&
 #
 # Configure MySQL
 service mysql stop &&
-wait $! && mysqld --skip-grant-tables || true &
-#mysqld --skip-grant-tables &
+#wait $! && mysqld --skip-grant-tables || true &
+mysqld --skip-grant-tables || true &
 #
 # Add user locally and to DB
 #adduser rehash &&

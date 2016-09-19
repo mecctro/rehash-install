@@ -20,7 +20,7 @@ adduser rehash &&
 mysql -h 127.0.0.1 -e \
  "CREATE DATABASE rehash;
 CREATE USER 'rehash'@'%' IDENTIFIED BY 'rehash';
-UPDATE mysql.user SET Grant_priv='Y', Super_priv='Y' WHERE User='rehash';
+GRANT ALL ON *.* TO 'rehash'@'%';
 FLUSH PRIVILEGES;" -p &&
 
 // Make default MySQL instance externally accessable

@@ -10,7 +10,7 @@ apt-get install git \
  mysql-server mysql-client -y  &&
 #
 # Get rehash
-git clone https://github.com/SoylentNews/rehash &&
+git clone https://github.com/mecctro/rehash &&
 cd rehash &&
 #
 # Configure MySQL

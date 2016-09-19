@@ -16,7 +16,7 @@ cd rehash &&
 #mysqld --skip-grant-tables &
 #
 # Add user locally and to DB
-adduser rehash &&
+#adduser rehash &&
 mysql -h 127.0.0.1 -e \
  "CREATE DATABASE rehash;
 CREATE USER 'rehash'@'%' IDENTIFIED BY 'rehash';

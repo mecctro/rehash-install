@@ -35,6 +35,7 @@ make build-environment USER=rehash GROUP=rehash -j 8 || true &&
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 make build-environment install -j 8 || true &&
+make build-environment install -j 8 || true &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash

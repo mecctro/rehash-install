@@ -23,18 +23,18 @@ mysql -h 127.0.0.1 -e \
  "CREATE DATABASE rehash;
 CREATE USER 'rehash'@'%' IDENTIFIED BY 'rehash';
 GRANT ALL ON *.* TO 'rehash'@'%';
-FLUSH PRIVILEGES;" -p &&
+FLUSH PRIVILEGES;" -p || true &&
 #
 # Make default MySQL instance externally accessable
 sed -i 's/bind-address/#bind-address/g' /etc/mysql/my.cnf &&
 ##service mysql restart &&
 #
 # Build rehash
-make build-environment USER=rehash GROUP=rehash -j 8 &&
+nohup make build-environment USER=rehash GROUP=rehash -j 8 || true &&
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
-make build-environment install -j 8 &&
+make build-environment install -j 8 || true &&
 #
 # Configure rehash
 make install-dbix-password &&

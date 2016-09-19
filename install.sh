@@ -12,8 +12,8 @@ git clone https://github.com/SoylentNews/rehash &&
 cd rehash &&
 #
 # Configure MySQL
-service mysql stop &&
-mysqld --skip-grant-tables &
+#service mysql stop &&
+#mysqld --skip-grant-tables &
 #
 # Add user locally and to DB
 adduser rehash &&
@@ -25,7 +25,7 @@ FLUSH PRIVILEGES;" -p &&
 #
 # Make default MySQL instance externally accessable
 sed -i 's/bind-address/#bind-address/g' /etc/mysql/my.cnf &&
-service mysql restart &&
+##service mysql restart &&
 #
 # Build rehash
 make build-environment USER=rehash GROUP=rehash -j 8 &&

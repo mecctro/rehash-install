@@ -1,4 +1,5 @@
 # Set local time to UTC
+#
 # dpkg-reconfigure tzdata
 timedatectl set-timezone Etc/UTC &&
 apt-get install git \

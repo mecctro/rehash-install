@@ -1,5 +1,5 @@
 # rehash-install
-Works on: Debian 8
+Works on: Debian 8?
 
 # Introduction
 Rehash is a fork of slash, located @ https://github.com/SoylentNews/rehash : the code that powers SoylentNews.org. This script aids (poorly) in installing rehash on a fresh debian box, for testing purposes.

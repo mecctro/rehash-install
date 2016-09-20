@@ -12,7 +12,7 @@ That being said, it should be faster than following the typical INSTALL procedur
 
 Notes
 -
-This MIGHT work on other (debian-based) distributions.
+Prepare to have some time on your hands, this compiles the entire environment. This MIGHT work on other (debian-based) distributions.
 
 Install
 -----

@@ -73,13 +73,14 @@ make build-environment USER=$user GROUP=$user -j $jobs || true &&
 # symlink addresses problem with change in folder name from repo, and apxs defaults
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
-make build-environment install -j $jobs || true &&
+make build-environment install || true &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
 #
-${realpath}rehash/make install-dbix-password &&
-${realpath}rehash/install-slashsite -u $user &&
+cd ${realpath}rehash &&
+make install-dbix-password &&
+install-slashsite -u $user &&
 #
 # Setup and start apache / rehash
 #

@@ -1,7 +1,37 @@
 #!/bin/sh
 set +e
-# VARS
-set logical_cores = grep -c ^processor /proc/cpuinfo
+#
+# Debian realpath()
+#
+realpath()
+{
+    f=$@
+    if [ -d "$f" ]; then
+        base=""
+        dir="$f"
+    else
+        base="/$(basename "$f")"
+        dir=$(dirname "$f")
+    fi
+    dir=$(cd "$dir" && /bin/pwd)
+    echo "$dir$base"
+}
+#
+# INIT / VARS
+#
+realpath=`realpath`
+cores=`grep -c '^processor' /proc/cpuinfo`
+user="rehash"
+jobs=$((cores*2))
+echo -n "What user would you like to use for rehash (default: $user)? "
+read user_input
+[ -n "$user_input" ] && user=$user_input
+echo -n "How many jobs would you like to run during installation (default: $jobs)? "
+read jobs_input
+[ -n "$jobs_input" ] && jobs=$jobs_input
+echo "Ready to install as $user, with $jobs jobs. (CTL-C to quit, ENTER to continue)"
+read nothing &&
+#
 # Set local time to UTC
 #
 # dpkg-reconfigure tzdata
@@ -12,30 +42,34 @@ apt-get install git \
  mysql-server mysql-client -y  &&
 #
 # Get rehash
+#
 git clone https://github.com/mecctro/rehash &&
-#cd rehash &&
 #
 # Configure MySQL
+#
 service mysql stop &&
 #wait $! && mysqld --skip-grant-tables || true &
-nohup mysqld --skip-grant-tables 2>&1 || true &
+nohup mysqld --skip-grant-tables >/dev/null 2>&1 || true &
 #
 # Add user locally and to DB
-#adduser rehash &&
-echo "Enter MySQL root password for rehash user installation:" &&
+#
+adduser $user || true &&
+echo "MySQL root access for rehash user installation." &&
 mysql -h 127.0.0.1 -e \
  "CREATE DATABASE rehash;
-CREATE USER 'rehash'@'%' IDENTIFIED BY 'rehash';
-GRANT ALL ON *.* TO 'rehash'@'%';
+CREATE USER '$user'@'%' IDENTIFIED BY '$user';
+GRANT ALL ON *.* TO '$user'@'%';
 FLUSH PRIVILEGES;" -p || true &&
 #
 # Make default MySQL instance externally accessable
+#
 sed -i 's/bind-address/#bind-address/g' /etc/mysql/my.cnf &&
 service mysql restart &&
 #
 # Build rehash
-cd ~/ &&
-make build-environment USER=rehash GROUP=rehash -j 8 || true &&
+#
+cd ${realpath}rehash &&
+make build-environment USER=$user GROUP=$user -j 8 || true &&
 # symlink addresses problem with change in folder name from repo, and apxs defaults
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
@@ -43,12 +77,15 @@ make build-environment install -j 8 || true &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
-cd rehash &&
+#
+cd ${realpath}rehash &&
 make install-dbix-password &&
-install-slashsite -u rehash &&
+install-slashsite -u $user &&
 #
 # Setup and start apache / rehash
+#
+cd ${realpath} &&
 export PATH=/opt/rehash-environment/apache-2.2.29/bin:$PATH &&
-sed -i 's/rehash:80/*:80/g' /opt/rehash-environment/rehash/site/rehash/rehash.conf &&
+sed -i 's/rehash:80/*:80/g' /opt/rehash-environment/rehash/site/$user/rehash.conf &&
 apachectl -k start &&
 /etc/init.d/slash start

@@ -78,10 +78,8 @@ export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
 #
-echo ${realpath}rehash &&
-cd ${realpath}rehash &&
-make install-dbix-password &&
-install-slashsite -u $user &&
+${realpath}rehash/make install-dbix-password &&
+${realpath}rehash/install-slashsite -u $user &&
 #
 # Setup and start apache / rehash
 #

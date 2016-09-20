@@ -9,7 +9,7 @@ Be warned : This is extremely experimental and only for disposable development s
 That being said, it should be faster than following the typical INSTALL procedure as outlined in original slash docs.
 
 # Notes
-This MIGHT work on other distributions.
+This MIGHT work on other (debian-based) distributions.
 
 Install
 -----

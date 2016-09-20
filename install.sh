@@ -57,8 +57,12 @@ adduser $user || true &&
 echo "MySQL root access for rehash user installation." &&
 mysql -h 127.0.0.1 -e \
  "CREATE DATABASE rehash;
-CREATE USER '$user'@'%' IDENTIFIED BY '$user';
-GRANT ALL ON *.* TO '$user'@'%';
+CREATE USER '$user'@'%' IDENTIFIED BY '$user';" -p || true &&
+
+service mysql restart &&
+
+mysql -h 127.0.0.1 -e \
+ "GRANT ALL ON *.* TO '$user'@'%';
 FLUSH PRIVILEGES;" -p || true &&
 #
 # Make default MySQL instance externally accessable

@@ -47,9 +47,9 @@ git clone https://github.com/mecctro/rehash
 #
 # Configure MySQL
 #
-service mysql stop &&
+#service mysql stop &&
 #wait $! && mysqld --skip-grant-tables || true &
-nohup mysqld --skip-grant-tables >/dev/null 2>&1 || true &
+#nohup mysqld --skip-grant-tables >/dev/null 2>&1 || true &
 #
 # Add user locally and to DB
 #
@@ -57,12 +57,8 @@ adduser $user || true &&
 echo "MySQL root access for rehash user installation." &&
 mysql -h 127.0.0.1 -e \
  "CREATE DATABASE rehash;
-CREATE USER '$user'@'%' IDENTIFIED BY '$user';" -p || true &&
-
-service mysql restart &&
-
-mysql -h 127.0.0.1 -e \
- "GRANT ALL ON *.* TO '$user'@'%';
+CREATE USER '$user'@'%' IDENTIFIED BY '$user';
+GRANT ALL ON *.* TO '$user'@'%';
 FLUSH PRIVILEGES;" -p || true &&
 #
 # Make default MySQL instance externally accessable

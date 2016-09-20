@@ -21,7 +21,7 @@ realpath()
 #
 realpath=`realpath`
 cores=`grep -c '^processor' /proc/cpuinfo`
-user="rehash"
+user=rehash
 jobs=$((cores*2))
 echo -n "What user would you like to use for rehash (default: $user)? "
 read user_input

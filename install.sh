@@ -78,8 +78,8 @@ export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
 #
-cd ${realpath}rehash &&
 echo ${realpath}rehash &&
+cd ${realpath}rehash &&
 make install-dbix-password &&
 install-slashsite -u $user &&
 #

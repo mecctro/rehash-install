@@ -43,7 +43,7 @@ apt-get install git \
 #
 # Get rehash
 #
-git clone https://github.com/mecctro/rehash &&
+git clone https://github.com/mecctro/rehash
 #
 # Configure MySQL
 #

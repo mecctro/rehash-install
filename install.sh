@@ -30,7 +30,7 @@ echo -n "How many jobs would you like to run during installation (default: $jobs
 read jobs_input
 [ -n "$jobs_input" ] && jobs=$jobs_input
 echo "Ready to install as $user, with $jobs jobs. (CTL-C to quit, ENTER to continue)"
-read nothing &&
+read nothing
 #
 # Set local time to UTC
 #

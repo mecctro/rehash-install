@@ -1,5 +1,7 @@
 #!/bin/sh
 set +e
+# VARS
+set logical_cores = grep -c ^processor /proc/cpuinfo
 # Set local time to UTC
 #
 # dpkg-reconfigure tzdata
@@ -32,7 +34,7 @@ sed -i 's/bind-address/#bind-address/g' /etc/mysql/my.cnf &&
 service mysql restart &&
 #
 # Build rehash
-cd rehash &&
+cd ~/ &&
 make build-environment USER=rehash GROUP=rehash -j 8 || true &&
 # symlink addresses problem with change in folder name from repo, and apxs defaults
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&

@@ -41,6 +41,7 @@ make build-environment install -j 8 || true &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
+cd rehash &&
 make install-dbix-password &&
 install-slashsite -u rehash &&
 #

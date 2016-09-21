@@ -23,6 +23,7 @@ realpath=`realpath`
 cores=`grep -c '^processor' /proc/cpuinfo`
 user=rehash
 jobs=$((cores*2))
+port=80
 echo -n "What user would you like to use for rehash (default: $user)? "
 read user_input
 [ -n "$user_input" ] && user=$user_input
@@ -43,7 +44,7 @@ apt-get install git \
 #
 # Get rehash
 #
-git clone https://github.com/mecctro/rehash
+git clone -b master --single-branch https://github.com/mecctro/rehash.git
 #
 # Configure MySQL
 #
@@ -69,21 +70,28 @@ service mysql restart &&
 # Build rehash
 #
 cd ${realpath}rehash &&
-sed -i 's/make test/TEST_JOBS=$jobs make test_harness/g' ${realpath}rehash/Makefile &&
-make build-environment USER=$user GROUP=$user -j $jobs || true &&
+#sed -i "s/make test/TEST_JOBS=$jobs make test_harness/g" ${realpath}rehash/Makefile || true &&
+#sed -i "s/make check/TEST_JOBS=$jobs make test_harness/g" ${realpath}rehash/Makefile || true &&
+sed -i "s/make check/TEST_JOBS=$jobs make test_harness/g" ${realpath}rehash/Makefile || true &&
+#sed -i "s/make && /make -j $jobs && /g" ${realpath}rehash/Makefile || true &&
+#make build-environment USER=$user GROUP=$user || true &&
+#make build-environment USER=$user GROUP=$user -j $jobs &&
 # symlink addresses problem with change in folder name from repo, and apxs defaults
-mkdir /opt &&
-mkdir /opt/rehash-environment &&
-mkdir /opt/rehash-environment/apache-2.2.29 &&
+mkdir /opt || true &&
+mkdir /opt/rehash-environment || true &&
+mkdir /opt/rehash-environment/apache-2.2.29 || true &&
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&
+#make build-environment USER=$user GROUP=$user -j $jobs &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
-make build-environment install || true -j $jobs &&
+make build-environment USER=$user GROUP=$user install || true  &&
+cd ${realpath}rehash &&
+make install-dbix-password &&
+make build-environment USER=$user GROUP=$user install &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
 #
-cd ${realpath}rehash &&
-make install-dbix-password &&
+##make install-dbix-password &&
 install-slashsite -u $user &&
 #
 # Setup and start apache / rehash

@@ -72,8 +72,8 @@ mkdir /opt || true &&
 mkdir /opt/rehash-environment || true &&
 mkdir /opt/rehash-environment/apache-2.2.29 || true &&
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&
-export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 make build-environment USER=$user GROUP=$user install || true  &&
+export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 cd ${realpath}rehash &&
 make install-dbix-password &&
 make build-environment USER=$user GROUP=$user install &&

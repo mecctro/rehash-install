@@ -46,12 +46,6 @@ apt-get install git \
 #
 git clone -b master --single-branch https://github.com/mecctro/rehash.git
 #
-# Configure MySQL
-#
-#service mysql stop &&
-#wait $! && mysqld --skip-grant-tables || true &
-#nohup mysqld --skip-grant-tables >/dev/null 2>&1 || true &
-#
 # Add user locally and to DB
 #
 adduser $user || true &&
@@ -70,18 +64,13 @@ service mysql restart &&
 # Build rehash
 #
 cd ${realpath}rehash &&
-#sed -i "s/make test/TEST_JOBS=$jobs make test_harness/g" ${realpath}rehash/Makefile || true &&
-#sed -i "s/make check/TEST_JOBS=$jobs make test_harness/g" ${realpath}rehash/Makefile || true &&
 sed -i "s/make check/TEST_JOBS=$jobs make test_harness/g" ${realpath}rehash/Makefile || true &&
 #sed -i "s/make && /make -j $jobs && /g" ${realpath}rehash/Makefile || true &&
-#make build-environment USER=$user GROUP=$user || true &&
-#make build-environment USER=$user GROUP=$user -j $jobs &&
 # symlink addresses problem with change in folder name from repo, and apxs defaults
 mkdir /opt || true &&
 mkdir /opt/rehash-environment || true &&
 mkdir /opt/rehash-environment/apache-2.2.29 || true &&
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&
-#make build-environment USER=$user GROUP=$user -j $jobs &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 make build-environment USER=$user GROUP=$user install || true  &&
 cd ${realpath}rehash &&
@@ -91,7 +80,6 @@ export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
 #
-##make install-dbix-password &&
 install-slashsite -u $user &&
 #
 # Setup and start apache / rehash

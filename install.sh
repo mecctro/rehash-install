@@ -75,7 +75,7 @@ export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 make build-environment USER=$user GROUP=$user install || true  &&
 cd ${realpath}rehash &&
 make install-dbix-password &&
-#make build-environment USER=$user GROUP=$user install &&
+make build-environment USER=$user GROUP=$user install &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
@@ -86,8 +86,11 @@ install-slashsite -u $user &&
 #
 cd ${realpath} &&
 export PATH=/opt/rehash-environment/apache-2.2.29/bin:$PATH &&
-sed -i 's/rehash:80/*:80/g' /opt/rehash-environment/rehash/site/$user/rehash.conf &&
 # get / fix missing / broken deps / links
+sed -i 's/rehash:80/*:80/g' /opt/rehash-environment/rehash/site/$user/rehash.conf &&
+sed -i 's/<VirtualHost/Listen 80\r<VirtualHost/g' /opt/rehash-environment/rehash/site/$user/rehash.conf &&
+sed -i 's/Listen 80/Listen 8080/g' /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
+head -n -3 /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf
 cpanm install HTML::PopupTreeSelect &&
 template-tool -U -u $user &&
 symlink-tool -U -u $user &&

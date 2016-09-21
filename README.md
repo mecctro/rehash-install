@@ -12,7 +12,7 @@ That being said, it should be faster than following the typical INSTALL procedur
 
 Notes
 -
-Prepare to have some time on your hands, this compiles the entire environment. This MIGHT work on other (debian-based) distributions.
+**You must enter DB information multiple times, correctly!** Prepare to have some time on your hands, this compiles the entire environment. This MIGHT work on other (debian-based) distributions.
 
 Install
 -----

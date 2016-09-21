@@ -69,7 +69,7 @@ service mysql restart &&
 # Build rehash
 #
 cd ${realpath}rehash &&
-make build-environment USER=$user GROUP=$user -j $jobs || true &&
+make build-environment USER=$user GROUP=$user || true &&
 # symlink addresses problem with change in folder name from repo, and apxs defaults
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&

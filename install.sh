@@ -22,6 +22,8 @@ realpath()
 realpath=`realpath`
 cores=`grep -c '^processor' /proc/cpuinfo`
 user=rehash
+pass=rehash
+ip="127.0.0.1"
 jobs=$((cores*2))
 port=80
 echo -n "What user would you like to use for rehash (default: $user)? "
@@ -50,9 +52,9 @@ git clone -b master --single-branch https://github.com/mecctro/rehash.git
 #
 adduser $user || true &&
 echo "MySQL root access for rehash user installation." &&
-mysql -h 127.0.0.1 -e \
+mysql -h $ip -e \
  "CREATE DATABASE rehash;
-CREATE USER '$user'@'%' IDENTIFIED BY '$user';
+CREATE USER '$user'@'%' IDENTIFIED BY '$pass';
 GRANT ALL ON *.* TO '$user'@'%';
 FLUSH PRIVILEGES;" -p || true &&
 #
@@ -72,10 +74,10 @@ mkdir /opt || true &&
 mkdir /opt/rehash-environment || true &&
 mkdir /opt/rehash-environment/apache-2.2.29 || true &&
 ln -s /opt/rehash-environment/apache-2.2.29 /opt/rehash-environment/httpd-2.2.29 || true &&
-make build-environment USER=$user GROUP=$user install || true  &&
 export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
+make build-environment USER=$user GROUP=$user install || true  &&
 cd ${realpath}rehash &&
-make install-dbix-password &&
+printf "$user\nmysql\nrehash\n$ip\n3306\n$user\n$pass" | make install-dbix-password &&
 make build-environment USER=$user GROUP=$user install &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
@@ -88,8 +90,8 @@ install-slashsite -u $user &&
 cd ${realpath} &&
 export PATH=/opt/rehash-environment/apache-2.2.29/bin:$PATH &&
 # get / fix missing / broken deps / links
-sed -i 's/rehash:80/*:80/g' /opt/rehash-environment/rehash/site/$user/rehash.conf &&
-sed -i 's/<VirtualHost/Listen 80\r<VirtualHost/g' /opt/rehash-environment/rehash/site/$user/rehash.conf &&
+sed -i "s/rehash:80/*$port:/g" /opt/rehash-environment/rehash/site/$user/rehash.conf &&
+sed -i 's/<VirtualHost/Listen $port\r<VirtualHost/g' /opt/rehash-environment/rehash/site/$user/rehash.conf &&
 sed -i 's/Listen 80/Listen 8080/g' /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
 head -n -3 /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf
 cpanm install HTML::PopupTreeSelect &&

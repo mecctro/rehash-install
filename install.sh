@@ -35,7 +35,7 @@ read pass_input
 echo -n "Port [default: $port]: "
 read port_input
 [ -n "$port_input" ] && port=$port_input
-echo -n "Jobs to run during installation (default: $jobs): "
+echo -n "Jobs [default: $jobs]: "
 read jobs_input
 [ -n "$jobs_input" ] && jobs=$jobs_input
 echo "Ready to install as $user, with $jobs jobs. (CTL-C to quit, ENTER to continue)"

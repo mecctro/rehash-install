@@ -26,10 +26,16 @@ pass=rehash
 ip="127.0.0.1"
 jobs=$((cores*2))
 port=80
-echo -n "What user would you like to use for rehash (default: $user)? "
+echo -n "User [default: $user]: "
 read user_input
 [ -n "$user_input" ] && user=$user_input
-echo -n "How many jobs would you like to run during installation (default: $jobs)? "
+echo -n "Pass [default: $pass]: "
+read pass_input
+[ -n "$pass_input" ] && pass=$pass_input
+echo -n "Port [default: $port]: "
+read port_input
+[ -n "$port_input" ] && port=$port_input
+echo -n "Jobs to run during installation (default: $jobs): "
 read jobs_input
 [ -n "$jobs_input" ] && jobs=$jobs_input
 echo "Ready to install as $user, with $jobs jobs. (CTL-C to quit, ENTER to continue)"

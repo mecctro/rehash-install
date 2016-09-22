@@ -66,6 +66,7 @@ service mysql restart &&
 # Build rehash
 #
 cd ${realpath}rehash &&
+sed -i "s/Dusethreads \&\& make \&\& make test \&\& make install/Dusethreads \&\& make \&\& make test \&\& make install -j $jobs/g" ${realpath}rehash/Makefile || true &&
 sed -i "s/make \&\&/make -j $jobs \&\&/g" ${realpath}rehash/Makefile || true &&
 #sed -i "s/\/bin\/cpanm/bin\/cpanm --notest/g" ${realpath}rehash/Makefile || true &&
 sed -i "s/make check/TEST_JOBS=$jobs make test_harness/g" ${realpath}rehash/Makefile || true &&
@@ -78,7 +79,6 @@ export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 make build-environment USER=$user GROUP=$user install || true &&
 cd ${realpath}rehash &&
 printf "$user\nmysql\nrehash\n$ip\n3306\n$user\n$pass" | make install-dbix-password &&
-sed -i "s/make install/make install -j $jobs/g" ${realpath}rehash/Makefile || true &&
 make build-environment USER=$user GROUP=$user install &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
@@ -92,7 +92,7 @@ cd ${realpath} &&
 export PATH=/opt/rehash-environment/apache-2.2.29/bin:$PATH &&
 # get / fix missing / broken deps / links
 sed -i "s/rehash:80/*$port:/g" /opt/rehash-environment/rehash/site/$user/rehash.conf &&
-sed -i 's/<VirtualHost/Listen $port\r<VirtualHost/g' /opt/rehash-environment/rehash/site/$user/rehash.conf &&
+sed -i "s/<VirtualHost/Listen $port\n<VirtualHost/g" /opt/rehash-environment/rehash/site/$user/rehash.conf &&
 sed -i 's/Listen 80/Listen 8080/g' /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
 head -n -3 /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
 cpanm install HTML::PopupTreeSelect &&

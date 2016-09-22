@@ -96,11 +96,13 @@ printf "\n$user\n$user\n\na\nY\n$user\n$pass\n\n\n" | install-slashsite -u $user
 #
 cd ${realpath} &&
 export PATH=/opt/rehash-environment/apache-2.2.29/bin:$PATH &&
-# get / fix missing / broken deps / links
+# get / fix missing / broken deps / links - pretty hackn'slappy
 sed -i "s/rehash:80/*:$port/g" /opt/rehash-environment/rehash/site/$user/rehash.conf &&
 sed -i "s/<VirtualHost/Listen $port\n<VirtualHost/g" /opt/rehash-environment/rehash/site/$user/rehash.conf &&
 sed -i 's/Listen 80/Listen 8080/g' /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
-head -n -3 /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf >> /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
+sed -i '$d' /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
+sed -i '$d' /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
+sed -i '$d' /opt/rehash-environment/httpd-2.2.29/conf/httpd.conf &&
 cpanm install HTML::PopupTreeSelect &&
 template-tool -U -u $user &&
 symlink-tool -U -u $user &&

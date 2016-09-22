@@ -83,7 +83,7 @@ export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
 # Configure rehash
 #
-install-slashsite -u $user &&
+printf "\n$user\n$user\n\na\nY\n$user\n$pass\n\n\n" | install-slashsite -u $user &&
 #
 # Setup and start apache / rehash
 #

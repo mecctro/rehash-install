@@ -56,6 +56,7 @@ git clone -b master --single-branch https://github.com/mecctro/rehash.git
 #
 # Add user locally and to DB
 #
+#printf "$pass\n$pass\n\n\n\n\n\nY\n" | adduser $user || true &&
 adduser $user || true &&
 echo "MySQL root access for rehash user installation." &&
 mysql -h $ip -e \

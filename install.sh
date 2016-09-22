@@ -69,7 +69,6 @@ cd ${realpath}rehash &&
 sed -i "s/make \&\&/make -j $jobs \&\&/g" ${realpath}rehash/Makefile || true &&
 #sed -i "s/\/bin\/cpanm/bin\/cpanm --notest/g" ${realpath}rehash/Makefile || true &&
 sed -i "s/make check/TEST_JOBS=$jobs make test_harness/g" ${realpath}rehash/Makefile || true &&
-#sed -i "s/make install/make install -j $jobs/g" ${realpath}rehash/Makefile || true &&
 # symlink addresses problem with change in folder name from repo, and apxs defaults
 mkdir /opt || true &&
 mkdir /opt/rehash-environment || true &&
@@ -79,6 +78,7 @@ export PATH=/opt/rehash-environment/perl-5.20.0/bin:$PATH &&
 make build-environment USER=$user GROUP=$user install || true &&
 cd ${realpath}rehash &&
 printf "$user\nmysql\nrehash\n$ip\n3306\n$user\n$pass" | make install-dbix-password &&
+sed -i "s/make install/make install -j $jobs/g" ${realpath}rehash/Makefile || true &&
 make build-environment USER=$user GROUP=$user install &&
 export PATH=/opt/rehash-environment/rehash/bin:$PATH &&
 #
